@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<audio id="audio" style="display:none">
+  <source src="http://www.w3schools.com/html/horse.ogg" type="audio/ogg">
+  <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+
+
+<a href="#" onclick="f();">play</a>
+
+<script>
+    function f() {
+        document.getElementById('audio').play();
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+	"COMPANY" : "ME",
+	"APPNAME" : "DaisyBoing",
+	"AUTHOR" : "Federico Ghedina",
+	"DOMAIN" : "http://www.jmvc.org",
+	"LIB_EXT" : ".js",
+	"COMPONENTS_EXT" : ".js",
+	"COMPONENTS_URI" : "/js/components",
+	"LANGS_URI" : "/i18n",
+	"DEFAULT_LANG" : "en",
+	"VERSION" : "0.1",
+	"BGIMAGE" : "daisy.svg",
+	"LIFES" : 3,
+	"SUBMIT_URL" : "http://www.boing2.dev/score.php",
+	"FONTAWESOME" : "css/font-awesome-4.5.0/font-awesome.min.css",
+	
+	"BALL" : "css/img/daisy.svg",
+	"daisy" : {
+		"size" : 76,
+		"color" : {
+			"inner" : "#ff6600",
+			"outer" : "white"
+		}
+	}
+}

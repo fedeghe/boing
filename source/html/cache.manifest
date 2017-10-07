@@ -1,0 +1,18 @@
+CACHE MANIFEST
+
+## __YEAR__/__DATE__/__TIME__
+
+index.html
+media/boing1.wav
+media/favicon.ico
+media/favicon.png
+css/fonts/SigmarOne.ttf
+css/fonts/SigmarOne.woff2
+css/img/logo4.png
+css/img/logo4.svg
+css/style.min.css
+js/sb.min.js
+js/main.min.js
+
+NETWORK:
+http://www.freakstyle.it/boing/index.html

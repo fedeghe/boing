@@ -1,0 +1,82 @@
+.root {
+	
+	.videocontainer {
+        overflow:hidden;
+        // height:250px;
+        
+        
+        .play-arrow {
+            position : absolute;
+            // width : 30px;
+            // height : 30px;
+            // top : 166px;
+            // right : 50px;
+            // background-color : transparent;
+            text-align:center;
+            cursor : pointer;
+            color : white;
+            opacity : 0.6 !important;
+            display:block;
+            z-index:900 !important;
+            bottom:5px;
+            right:5px;
+            color:red;
+        }
+        .play-arrow:hover {
+            opacity:0.8
+        }
+
+        video {
+        	float:none;
+        	clear:both
+        }
+    }
+
+
+    .justVideoPanel {
+        z-index:999;
+        position : absolute;
+        width : 80%;
+        left : 10%;
+        top : 0;
+        height : 50px;
+        
+        padding : 5px;
+        background-color : white;
+
+        line-height : 50px;
+
+        border:none 3px #000000;
+        -moz-border-radius-bottomleft:14px;
+        -moz-border-radius-bottomright:14px;
+        -webkit-border-bottom-left-radius:14px;
+        -webkit-border-bottom-right-radius:14px;
+        border-bottom-left-radius:14px;
+        border-bottom-right-radius:14px;
+            
+
+        -moz-box-shadow:0px 0px 10px #fff;
+        -webkit-box-shadow:0px 0px 10px #fff;
+        box-shadow:0px 0px 10px #fff;
+       
+        div {
+            display:inline-block;
+            line-height : 50px;
+        }
+
+        img {
+            
+            height: 40px;
+            margin-right:10px
+        }
+        transition: top .5s ease-in-out;
+       -moz-transition: top .5s ease-in-out;
+       -webkit-transition: top .5s ease-in-out;
+    }
+    .justVideoPanel.fadeIn{
+        top:0px;
+    }
+    .justVideoPanel.fadeOut{
+        top : -60px;
+    }
+}

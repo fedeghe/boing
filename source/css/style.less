@@ -1,0 +1,410 @@
+$$palette.less$$
+$$normalize.css$$
+$$utils.less$$
+html, body{
+	height:100%
+}
+body {
+	color: @pink;
+	height:100%;
+	.logo {
+		background-color: @bgcolor;
+		height:100%;
+	}
+}
+body.loading {
+	.logo {
+		background: @bgcolor url(img/$BGIMAGE$) no-repeat;
+		background-position: center center;
+		background-size: 95% 95%;
+	}
+}
+
+@-webkit-keyframes rotate_cw {
+  from {-webkit-transform:rotate(30deg);}
+  to {  -webkit-transform:rotate(90deg);}
+}
+
+@-moz-keyframes rotate_cw {
+  from {-moz-transform:rotate(30deg);}
+  to {  -moz-transform:rotate(90deg);}
+}
+@-webkit-keyframes rotate_ccw {
+  from {-webkit-transform:rotate(60deg);}
+  to {  -webkit-transform:rotate(0deg);}
+}
+
+@-moz-keyframes rotate_ccw {
+  from {-moz-transform:rotate(60deg);}
+  to {  -moz-transform:rotate(0deg);}
+}
+
+::selection{ background-color: transparent;}
+::moz-selection{ background-color: transparent;}
+::webkit-selection{ background-color: transparent;}
+
+::-webkit-input-placeholder { color: #888;}
+:-moz-placeholder { color: #888;}
+::-moz-placeholder { color: #888;}
+:-ms-input-placeholder { color: #888;}
+
+
+body {
+	* {
+		z-index : 10;
+	}
+	overflow:hidden;
+	font-size:28px;
+	line-height: 28px;
+
+	@font-face {
+		font-family: 'Sigmar One';
+		font-style: normal;
+		font-weight: 400;
+		src: local('Sigmar One'), local('SigmarOne'), url(fonts/SigmarOne.woff2) format('woff2'), url(fonts/SigmarOne.ttf) format('truetype');
+	}
+	font-family: 'Sigmar One';
+	canvas {
+		background-color: @bgcolor;
+		z-index:2;
+		// background-image : url(img/gravity.jpg);
+	}
+
+/*
+	div.bg, div.bg.up_bottom {
+		background-image: url(img/arrow.png);
+		-webkit-animation: backgroundScroll 99999s linear infinite;
+		animation: backgroundScroll 99999s linear infinite; 
+	}
+*/
+	@-webkit-keyframes backgroundScroll {
+	from {background-position: 0 0;}
+	to {background-position: 0 99999999px;}
+	}
+
+	@keyframes backgroundScroll {
+	from {background-position: 0 0;}
+	to {background-position: 0 99999999px;}
+	}
+
+	div.bg.bottom_up{
+		-webkit-transform: rotate(180deg);
+		-moz-transform: rotate(180deg);
+		-ms-transform: rotate(180deg);
+		-o-transform: rotate(180deg);
+		transform: rotate(180deg);
+	}
+
+	div.bg.right_left{
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		-o-transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
+	div.bg.left_right{
+		-webkit-transform: rotate(-90deg);
+		-moz-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+	}
+
+
+
+	video {
+		z-index:1;
+		opacity:0.5
+	}
+
+
+	.panel {
+		z-index:100;
+		
+		padding:10px;
+		
+	}
+
+	.lifes {
+		z-index:100;
+		position:absolute;
+		right: 0px;
+		top: 0px;
+		padding:10px;
+		margin-right:20px;
+	
+		.life {
+			display:inline-block;
+			margin-right:-16px;
+			width: 60px;
+			height:60px;
+			background-image:url(img/$BGIMAGE$);
+			-webkit-animation-duration:.5s;
+			-webkit-animation-iteration-count:infinite;
+			-webkit-animation-timing-function:linear;
+			-moz-animation-duration:.5s;
+			-moz-animation-iteration-count:infinite;
+			-moz-animation-timing-function:linear;
+		}
+		:nth-child(odd) {
+			-webkit-animation-name: rotate_cw;
+			-moz-animation-name: rotate_cw;
+		}
+		:nth-child(even) {
+			-webkit-animation-name: rotate_ccw;
+			-moz-animation-name: rotate_ccw;
+		}
+	}
+
+
+
+	.help {
+		position:absolute;
+		bottom : 0px;
+		right: 0px;
+		cursor:pointer;
+		font-size:1.5em;
+		padding:.8em;
+	}
+
+
+	.infoWindow {
+		display : none;
+		padding:20px;
+		position:absolute;
+		top:25%;
+		// height:50%;
+		// padding-bottom:50px;
+		left:10%;
+		width:80%;
+		background-color: @pink;
+		color: @col2;
+		ul {
+			margin-left:-10px
+		}
+		li {
+			margin-top:1em;
+			font-size:1em;
+			color:#faa;
+		}
+		button {
+			width:50%;
+			margin-left:25%;
+			background-color:white;
+			color:@pink;
+			cursor:pointer;
+			border:none;
+			height:1.5em;
+			line-height:1.5em;
+		}
+	
+	}
+	
+	.lifeLost i {
+		color : @col1;
+	}
+	.lifeLost, .gameOver {
+		padding:20px;
+		position:absolute;
+		top:50%;
+		
+		left:5%;
+
+		width:90%;
+		text-align:center;
+		color: @pink;
+	}
+
+	.spacezoom {
+		overflow:hidden;
+		// display: none;
+		position:absolute;
+		top : 0px;
+		background-color:#ddd;
+		width:100%;
+		z-index:99;
+		height:5px;
+		opacity:0.9;
+		.cell {
+			position:absolute;
+			height:5px;
+			width:30px;
+			top:0px;
+			background-color: @pink;
+			
+		}
+	}
+
+	.closeButton {
+		position : absolute;
+		cursor : pointer;
+		right : 10px;
+		top : 10px;
+		text-shadow:0px 0px 2px #000;
+	}
+	
+
+	.lifeLost {
+		text-shadow:50px 50px 100px #000;
+		font-size: 1.5em
+	}
+	.gameover {
+
+		-moz-box-shadow:5px 5px 5px #000000;
+		-webkit-box-shadow:5px 5px 5px #000000;
+		box-shadow:5px 5px 5px #000000;
+
+		// text-shadow:0px 0px 20px #000000;
+		h1,p{
+			text-align: center;
+		}
+		h1{
+			text-shadow:0px 0px 10px #000000;
+			padding-bottom: 0px !important;
+		}
+
+		h1 span{
+			line-height:1.5em;
+		}
+		h1 span.score {
+			
+			margin-left:1em;
+
+		}
+		form {
+			input[type=text]{
+				color:#555;
+				margin-bottom : 20px;
+				
+				margin:10px 20%;
+				width:60%;
+
+				text-align:center;
+				line-height: 1.5em;
+				
+			}
+
+			input[type=button]{
+				font-size: 1.5em;
+				color:white;
+				border:3px solid white;
+				background-color: @pink;
+				text-shadow:0px 0px 5px #000000;
+			}
+			input[type=button]:hover{
+				color: @pink;
+				background-color: white;
+				
+				-moz-box-shadow:5px 5px 5px #000000;
+				-webkit-box-shadow:5px 5px 5px #000000;
+				box-shadow:5px 5px 5px #000000;
+
+
+			}
+
+		}
+		.leaderBoard {
+			// position:absolute;
+			// top:10px;
+			// left:10px;
+			// bottom:10px;
+			// right:10px;
+			background-color: white;
+			z-index:500;
+			color:@pink;
+
+			ul {
+				width:90%;
+				margin:0 auto;
+				list-style-type: none;
+				padding:10px 0;
+				overflow:scroll;
+				
+
+				li {
+					margin-top : 10px;
+					padding:5px;
+					line-height:1.2em;
+					height:1.5em;
+					span {
+						display:inline-block;
+					}
+					span.rank {
+						width:8%;
+						color:black;
+					}
+					span.name {
+						width:50%;
+						color:@pink;
+					}
+					span.score {
+						width:42%;
+						color:black;
+						text-align:right;
+					}
+				}
+				li.even {
+					background-color: #eee;
+				}
+				li.odd {
+					background-color: #fff;
+				}
+				li:hover {
+					span{
+						color:white;
+						font-size : 1.2em;
+					}
+					background-color: @pink
+				}
+
+			}
+
+
+			.leaderBoard_content {
+				// position : absolute; 
+				
+				width:80%;
+				margin : 0 10%;
+				padding : 10px 0px;
+			}
+			
+		}
+		.bottomPanel {
+			margin-top: 20px;
+		}
+		.fa {
+			font-size:2em;
+			cursor:pointer;
+			// margin:.5em;
+		}
+		.fa:hover {
+			text-shadow: 0 0 10px #000;
+		} 
+		.fa-trophy {
+			
+			float:left;
+		}
+		.fa-play-circle{
+			font-size:3em !important;
+		}
+		.fa-times {
+			color:@pink;
+			float:right;
+			right:5px;
+			position:relative;
+		}
+
+
+	}
+
+	div.loading {
+		background: @bgcolor url(img/$BGIMAGE$) no-repeat;
+		width:200px;
+		height:200px;
+		animation-duration: 1s;
+	    animation-iteration-count: infinite;
+	    animation-timing-function: linear;
+	    animation-name : rotate_cw;
+	    margin : 0 auto;
+	}
+}

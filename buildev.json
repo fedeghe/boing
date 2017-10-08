@@ -1,0 +1,17 @@
+{
+	"EXE" : [
+		"rm -rf css js media",
+		"mkdir -p js/components",
+		"mkdir -p css/img",
+		"cp -r source/assets/media .",
+		"cp -r source/assets/css/font-awesome-4.5.0 css/",
+		"cp -r source/assets/css/fonts css/"
+	],
+	"source/js/core/tpl/db.js" : "js -vars=source/vars.json",
+	"source/js/main.js" : "js -vars=source/vars.json",
+	"source/js/components/*.js" : "js/components -vars=source/vars.json",
+	"source/css/style.less" : "css -require=malta-less -vars=source/vars.json",
+	"source/svg/daisy.svg" : "css/img -plugins=malta-svg2png -vars=source/vars.json",
+	"source/html/index.html" : ". -plugins=malta-browser-refresh[files:\"*\"] -vars=source/vars.json",
+	"source/html/cache.manifest" : ". -vars=source/vars.json"
+}

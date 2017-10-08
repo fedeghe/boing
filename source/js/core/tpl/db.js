@@ -6,13 +6,13 @@ $$../css.js$$
 $$../dom.js$$
 $$../html5.js$$
 $$../events.js$$
+$$../mobile.js$$
 $$../string.js$$
 $$../crypt.js$$
 $$../channel.js$$
 $$../widgzard.js$$
 $$../cookie.js$$
 $$../canvas.js$$
-
 $$../i18n.js$$
 $$../animate.js$$
 $$../engy/config.js$$

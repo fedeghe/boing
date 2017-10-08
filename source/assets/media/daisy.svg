@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="76" height="76">
+    <g id="to-sun" fill="tomato">
+        <ellipse rx="17.1" ry="6.65" cx="57" cy="38" transform="translate(0 0),rotate(0 38 38)" stroke="black" stroke-width="1.9" fill="white" />
+        <ellipse rx="17.1" ry="6.65" cx="57" cy="38" transform="translate(0 0),rotate(60 38 38)" stroke="black" stroke-width="1.9" fill="white" />
+        <ellipse rx="17.1" ry="6.65" cx="57" cy="38" transform="translate(0 0),rotate(120 38 38)" stroke="black" stroke-width="1.9" fill="white" />
+        <ellipse rx="17.1" ry="6.65" cx="57" cy="38" transform="translate(0 0),rotate(180 38 38)" stroke="black" stroke-width="1.9" fill="white" />
+        <ellipse rx="17.1" ry="6.65" cx="57" cy="38" transform="translate(0 0),rotate(240 38 38)" stroke="black" stroke-width="1.9" fill="white" />
+        <ellipse rx="17.1" ry="6.65" cx="57" cy="38" transform="translate(0 0),rotate(300 38 38)" stroke="black" stroke-width="1.9" fill="white" />
+    </g>
+    <circle cx="38" cy="38" r="9.5" stroke="black" stroke-width="1.9" fill="#ff6600" />
+</svg>

@@ -7,7 +7,7 @@
         }
     };
 
-    SB.dom = {
+    LIB.dom = {
 
         addClass : function (elem, addingClass) {
             var cls = !!(elem.className) ? elem.className : '',
@@ -44,7 +44,7 @@
                 result,
                 is_obj = false;
      
-            is_obj = SB.util.isObject(name);
+            is_obj = LIB.util.isObject(name);
             
             if (is_obj && elem.setAttribute) {
                 for (i in name) {
@@ -97,8 +97,8 @@
         },
 
         switchClass : function (elem, classToGo, classToCome) {
-            SB.dom.removeClass(elem, classToGo);
-            SB.dom.addClass(elem, classToCome);
+            LIB.dom.removeClass(elem, classToGo);
+            LIB.dom.addClass(elem, classToCome);
             return true;
         },
 
@@ -122,7 +122,7 @@
             prop = prop || _.dom.nodeAttrForIndex;
             //if (!el.hasOwnProperty(prop)) {
             if (!(prop in el)) {
-                var nid = SB.util.uniqueid + '';
+                var nid = LIB.util.uniqueid + '';
                 el[prop] = nid;
                 //save inverse
                 _.dom.nodeidMap[nid] = el;

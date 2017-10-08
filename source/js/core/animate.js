@@ -1,4 +1,4 @@
-SB.makeNS('SB/animate');
+LIB.makeNS('$LIB$/animate');
 
 
 // a polyfill for requestAnimationFrame
@@ -28,7 +28,7 @@ SB.makeNS('SB/animate');
         };
 }());
 
-SB.animate.move = function(elem, move) {
+LIB.animate.move = function(elem, move) {
     var xmove = move.x || false,
         ymove = move.y || false,
 
@@ -56,7 +56,7 @@ SB.animate.move = function(elem, move) {
 
 };
 
-SB.animate.fadeIn = function (el) {
+LIB.animate.fadeIn = function (el) {
   el.style.opacity = 0;
 
   var last = +new Date();
@@ -70,7 +70,7 @@ SB.animate.fadeIn = function (el) {
   };
   tick();
 }
-SB.animate.fadeOut = function (el) {
+LIB.animate.fadeOut = function (el) {
   el.style.opacity = 1;
 
   var last = +new Date();
@@ -85,7 +85,7 @@ SB.animate.fadeOut = function (el) {
   tick();
 }
 
-SB.animate.transform = function (elem, props, duration) {
+LIB.animate.transform = function (elem, props, duration) {
     var startTime = +new Date,
         step = 50,
         time;
@@ -114,4 +114,4 @@ SB.animate.transform = function (elem, props, duration) {
     }
 };
 
-// SB.animate.move($0, {x:300});
+// LIB.animate.move($0, {x:300});

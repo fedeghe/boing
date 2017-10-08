@@ -2,7 +2,7 @@
 
     var TO_RADIANS = Math.PI/180; 
 
-    SB.canvas = {
+    LIB.canvas = {
 
         drawRotatedImage : function (ctx, image, x, y, angle, size) { 
          

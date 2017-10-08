@@ -1,4 +1,4 @@
-SB.s = {
+NS.s = {
 	//data
 	d : {
 		e : [], // filled with time*(dx?1:-1)
@@ -16,9 +16,9 @@ SB.s = {
 	snd : function (score, name) {
 		var self = this;
 		this.d.cs = score;
-		this.d.os = SB.security.crypt(score+"", eval(this.d.e.join('+')) + (name||'anonymous'));
-		SB.io.post("$SUBMIT_URL$?a=pre", function (r) {
-			SB.Channel('boing').pub('submitReady', [r]);
+		this.d.os = LIB.security.crypt(score+"", eval(this.d.e.join('+')) + (name||'anonymous'));
+		LIB.io.post("$SUBMIT_URL$?a=pre", function (r) {
+			LIB.Channel('boing').pub('submitReady', [r]);
 		}, true, {
 			e : self.d.e,
 			cs : self.d.cs,
@@ -29,6 +29,6 @@ SB.s = {
 		this.d = {e : [], cs : 0, os : ''};
 	},
 	getLeaderboard : function (f) {
-		SB.io.getJson('$SUBMIT_URL$?a=lb', f);
+		LIB.io.getJson('$SUBMIT_URL$?a=lb', f);
 	}
 };

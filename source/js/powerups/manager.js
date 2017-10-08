@@ -3,14 +3,14 @@ gameProto.endTimeout = false;
 
 gameProto.startPowerUpsManager = function () {
 
-	console.debug('powerupManager started');
+	console.log('powerupManager started');
 
 	var self = this,
 		G = this,
 		powerUps = {},
 		i = 0, l,
 		_puNode = G.panel.getNode('powerup').node,
-		_channel = SB.Channel('boing'),
+		_channel = LIB.Channel('boing'),
 		_powerUp_margin_area = 200;
 	
 	/* ##powerups/invert.js## */

@@ -10,16 +10,16 @@ powerUps.visor = {
 
 	show : function () {
 		
-		console.debug('visor show icon');
-		console.debug(_puNode);
+		console.log('visor show icon');
+		console.log(_puNode);
 
 
 		var VISOR = this,
 			P = _puNode,
 			to,
 			pos = [
-				SB.util.rand(_powerUp_margin_area, G.viewport.width - _powerUp_margin_area),
-				SB.util.rand(_powerUp_margin_area, G.viewport.height - _powerUp_margin_area)
+				NS.util.rand(_powerUp_margin_area, G.viewport.width - _powerUp_margin_area),
+				NS.util.rand(_powerUp_margin_area, G.viewport.height - _powerUp_margin_area)
 			],
 			size = G.viewport.width/(_mobile ? 10 : 25);
 
@@ -49,20 +49,17 @@ powerUps.visor = {
 
 	hide : function () {
 
-		console.debug('visor hide');
+		console.log('visor hide');
 
 	},
 
 	activate : function () {
 		
-		console.debug('visor active');
+		console.log('visor active');
 
 		// G.panel.getNode('powerup_spec').data.start(this);
 		
-
-
-
-		SB.Widgzard.render({
+		LIB.Widgzard.render({
 			target : _puNode,
 			attrs : {'class' : 'spacezoom'},
 			content : [{
@@ -78,19 +75,19 @@ powerUps.visor = {
 					// event driven
 					//
 					function move(topic, val) {
-						SB.css.style($elf, {width : G.I.width + 'px'});
-						SB.css.style($elf, {left : val + 'px'});
+						LIB.css.style($elf, {width : G.I.width + 'px'});
+						LIB.css.style($elf, {left : val + 'px'});
 					}
 
 					function show() {
 						if (!visible) {
-							SB.css.style($bar, {display : 'block'});
+							LIB.css.style($bar, {display : 'block'});
 							visible = true;
 						}
 					}
 					function hide() {
 						if (visible) {
-							SB.css.style($bar, {display : 'none'});
+							LIB.css.style($bar, {display : 'none'});
 							visible = false;
 						}
 					}
@@ -108,6 +105,6 @@ powerUps.visor = {
 	deactivate : function () {
 		// _channel.reset('outNotifyShow', 'outNotifyHide');
 		_puNode.innerHTML = '';
-		console.debug('visor unactive');
+		console.log('visor unactive');
 	}
 };

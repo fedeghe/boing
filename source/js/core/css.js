@@ -1,6 +1,6 @@
-SB.makeNS('SB/css');
+LIB.makeNS('$LIB$/css');
 
-SB.css.style = function (el, prop, val ) {
+LIB.css.style = function (el, prop, val ) {
 
 	if (!el) return false;
 
@@ -30,14 +30,14 @@ SB.css.style = function (el, prop, val ) {
 	return true;
 };
 
-SB.css.fontAwesome = function () {
+LIB.css.fontAwesome = function () {
 	var fa = document.createElement('link');
 	fa.href = '$FONTAWESOME$';
 	fa.rel = 'stylesheet';
 	document.getElementsByTagName('head').item(0).appendChild(fa);
 };
 
-SB.css.setZoom = function (el, zoom, origin) {
+LIB.css.setZoom = function (el, zoom, origin) {
 
 	origin = origin || [ 0.5, 0.5 ];
 
@@ -54,7 +54,7 @@ SB.css.setZoom = function (el, zoom, origin) {
 	el.style["transformOrigin"] = oString;
 }
 
-SB.css.bg = (function () {
+LIB.css.bg = (function () {
 
 	var speed = 0.6,
 		steps = 15,
@@ -96,7 +96,7 @@ SB.css.bg = (function () {
 		tmp = rgbElements.join(',');
 
 		for (i = 0; i < l; i++) {
-			SB.css.style(node, 'background', SB.util.replaceAll(tpls[i], {rgbaElements: tmp}));
+			LIB.css.style(node, 'background', LIB.util.replaceAll(tpls[i], {rgbaElements: tmp}));
 		}
 
 		if (cursor != end) {
@@ -110,14 +110,14 @@ SB.css.bg = (function () {
 	}
 
 	function clean() {
-		SB.css.style(node, 'background', 'none');
+		LIB.css.style(node, 'background', 'none');
 	}
 
 
-	// SB.css.bg.moveR(node, [255,255,255]);
+	// LIB.css.bg.moveR(node, [255,255,255]);
 	function moveR(elem, c) {
 		node = elem;
-		color = SB.util.replaceAll(baseColorTpl, {r:c[0],g:c[1],b:c[2],a:transparency});
+		color = LIB.util.replaceAll(baseColorTpl, {r:c[0],g:c[1],b:c[2],a:transparency});
 		start = 0;
 		end = steps - 1;
 		versus = 1;
@@ -126,7 +126,7 @@ SB.css.bg = (function () {
 	}
 	function moveL(elem, c) {
 		node = elem;
-		color =  SB.util.replaceAll(baseColorTpl, {r:c[0],g:c[1],b:c[2],a:transparency});
+		color =  LIB.util.replaceAll(baseColorTpl, {r:c[0],g:c[1],b:c[2],a:transparency});
 		start = steps - 1;
 		end = 0;
 		versus = -1;

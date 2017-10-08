@@ -1,4 +1,4 @@
-SB.txtSlide = {
+LIB.txtSlide = {
 	active : true,
 	shut : function () {
 		this.active = false;

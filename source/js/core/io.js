@@ -1,5 +1,5 @@
-SB.makeNS('SB/io');
-SB.io = (function (){
+LIB.makeNS('$LIB$/io');
+LIB.io = (function (){
 
     var W = window,
         xdr = typeof W.XDomainRequest !== 'undefined' && document.all && !(navigator.userAgent.match(/opera/i)),
@@ -48,7 +48,7 @@ SB.io = (function (){
 
             setCookiesHeaders : function (xhr) {
                 var cookies, i, l;
-                cookies = SB.cookie.getall();
+                cookies = LIB.cookie.getall();
                 i = 0, l = cookies.length;
                 while (i < l) {
                     xhr.setRequestHeader("Cookie", cookies[i].name + "=" + cookies[i].value);
@@ -90,7 +90,7 @@ SB.io = (function (){
                 
                 if (method === 'GET') {
 
-                    data = SB.object.toQs(data).substr(1);
+                    data = LIB.object.toQs(data).substr(1);
 
                 } else {
                     // wrap data into a FromData object

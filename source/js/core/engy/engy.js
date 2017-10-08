@@ -10,15 +10,15 @@
  * @author Federico Ghedina <fedeghe@gmail.com>
  * 
  * @depencencies:
- * SB.Widgzard.Promise
- * SB.checkNS()
- * SB.object
- * SB.io
+ * LIB.Widgzard.Promise
+ * LIB.checkNS()
+ * LIB.object
+ * LIB.io
  */
 
-SB.makeNS("SB/engy");
+LIB.makeNS("LIB/engy");
 
-SB.engy.process = function () {
+LIB.engy.process = function () {
 
 	var args = [].slice.call(arguments, 0),
 		config = args[0],
@@ -30,14 +30,14 @@ SB.engy.process = function () {
 			fileNamePrepend : "component_",
 			ext : "$COMPONENTS_EXT$"
 		},
-		langFunc = SB.i18n.check;
+		langFunc = LIB.i18n.check;
 
 
 	// user i18n? 
 	//
 	'params' in config &&
 	'i18n' in config.params &&
-	SB.i18n.dynamicLoad(config.params.i18n);
+	LIB.i18n.dynamicLoad(config.params.i18n);
 
 	/**
 	 * Basic Processor object
@@ -60,12 +60,12 @@ SB.engy.process = function () {
 	processorPROTO.run = function () {
 
 		var self = this,
-			endPromise = SB.Widgzard.Promise.create(),
+			endPromise = LIB.Widgzard.Promise.create(),
 			tmp, i1, i2 , l1, l2;
 
-		// if (SB.engy.config.lazyLoading) {
+		// if (LIB.engy.config.lazyLoading) {
 			self.getComponentsPromise().then(function () {
-				SB.Widgzard.Promise.join(self.retFuncs).then(function (pro, r) {
+				LIB.Widgzard.Promise.join(self.retFuncs).then(function (pro, r) {
 
 					build(self, pro); // let the build resolve it
 
@@ -78,15 +78,15 @@ SB.engy.process = function () {
 		// } else { 
 		// 	// get position
 		// 	self.getComponents();
-		// 	// now look into SB ns to get the missing json, the one loaded in lazy mode
+		// 	// now look into LIB ns to get the missing json, the one loaded in lazy mode
 		// 	for (i1 = 0, l1 = self.components.length; i1 < l1 ; i1++) {
 		// 		if (self.components[i1]) {
 		// 			for (i2 = 0, l2 = self.components[i1].length; i2 < l2; i2++) {
-		// 				self.components[i1][i2].json = SB.components[self.components[i1][i2].component.value]; //SB.components;
+		// 				self.components[i1][i2].json = LIB.components[self.components[i1][i2].component.value]; //LIB.components;
 		// 			}
 		// 		}
 		// 	}
-		// 	var p = SB.Widgzard.Promise.create();
+		// 	var p = LIB.Widgzard.Promise.create();
 		// 	p.then(function (p, r) {
 				
 		// 		//console.debug(r[0]);
@@ -102,7 +102,7 @@ SB.engy.process = function () {
 
 	processorPROTO.getComponents = function () {
 		var self = this,
-			tmp = SB.object.digForKey(self.config, 'component'),
+			tmp = LIB.object.digForKey(self.config, 'component'),
 			i, l;
 
 		//build at level
@@ -113,14 +113,14 @@ SB.engy.process = function () {
 			}     
 			self.components[tmp[i].level].push({
 				component : tmp[i],
-				params : SB.checkNS(tmp[i].container ?  tmp[i].container + '.params' : 'params' , self.config)
+				params : LIB.checkNS(tmp[i].container ?  tmp[i].container + '.params' : 'params' , self.config)
 			});
 		}
 	}; 
 	
 	processorPROTO.getComponentsPromise = function () {
 		var self = this,
-			p = SB.Widgzard.Promise.create(),
+			p = LIB.Widgzard.Promise.create(),
 			i1, i2, l1, l2;
 
 		self.getComponents();
@@ -139,17 +139,17 @@ SB.engy.process = function () {
 
 						self.retFuncs.push(function () {
 							// a promise for that component
-							var pr = SB.Widgzard.Promise.create(),
+							var pr = LIB.Widgzard.Promise.create(),
 
 								// get the right complete path for the file
 								parts = self.components[j1][j2].component.value.split(CONST.fileNameSeparator),
 								last = parts.pop(),
 								readyName = parts.join(CONST.fileNameSeparator) + CONST.fileNameSeparator + CONST.fileNamePrepend + last,
-								file = SB.engy.config.componentsUrl + readyName + CONST.ext;
+								file = LIB.engy.config.componentsUrl + readyName + CONST.ext;
 							
 							// not get it as json, but as raw text so it's possible to specify the cb within the component
 							// not being it validated from JSON.parse
-							SB.io.get(
+							LIB.io.get(
 								file,
 								function (raw) {
 									// remove WHATEVER is found before the {
@@ -222,7 +222,7 @@ SB.engy.process = function () {
 			solve = function (j, p) {
 
 				// use 
-				var replacing = SB.object.digForValue(j, /#PARAM{([^}|]*)?\|?([^}]*)}/),
+				var replacing = LIB.object.digForValue(j, /#PARAM{([^}|]*)?\|?([^}]*)}/),
 					i, l,
 					mayP, fback, ref,
 					ret,
@@ -237,9 +237,9 @@ SB.engy.process = function () {
 					}
 
 
-					mayP = SB.checkNS(replacing[i].regexp[1], p),
+					mayP = LIB.checkNS(replacing[i].regexp[1], p),
 					fback = replacing[i].regexp[2],
-					ref = SB.checkNS(replacing[i].container, j);
+					ref = LIB.checkNS(replacing[i].container, j);
 
 					// maybe convert
 					
@@ -258,11 +258,11 @@ SB.engy.process = function () {
 				// 
 				if (langFunc) {
 
-					replacing = SB.object.digForValue(j, /i18n\(([^}|]*)?\|?([^}]*)\)/);
+					replacing = LIB.object.digForValue(j, /i18n\(([^}|]*)?\|?([^}]*)\)/);
 
 					for (i = 0, l = replacing.length; i < l; i++) {
 						mayP = langFunc(replacing[i].regexp[0]),
-						ref = SB.checkNS(replacing[i].container, j);
+						ref = LIB.checkNS(replacing[i].container, j);
 						ref[replacing[i].key] = mayP;
 					}	
 				}
@@ -282,7 +282,7 @@ SB.engy.process = function () {
 
 					res = solve(json, params);
 
-					ref = SB.checkNS(comp.component.parentContainer, config);
+					ref = LIB.checkNS(comp.component.parentContainer, config);
 					
 					if (comp.component.parentKey != undefined) {
 						ref[comp.component.parentKey] = res;
@@ -301,14 +301,14 @@ SB.engy.process = function () {
 	// RUN & return the promise, 
 	// so the tipical usega will be
 	// 
-	//  SB.engy.process(component-params--CONF).done(function (thePromise, theResults){
+	//  LIB.engy.process(component-params--CONF).done(function (thePromise, theResults){
 	//      
 	//      // theResults is an array of the results passed to promise.done()
 	//      // in this case is just one, the first el of the array
 	//      
-	//      // maybe add a target element, otherwise SB.Widgzard will use the body
+	//      // maybe add a target element, otherwise LIB.Widgzard will use the body
 	//      theResults[0].target = document.getElementById('myTargetDivID');
-	//      SB.Widgzard.render(theResults[0], true);
+	//      LIB.Widgzard.render(theResults[0], true);
 	//      
 	//  });
 	// 

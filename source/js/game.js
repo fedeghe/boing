@@ -1,33 +1,30 @@
 ~function () {
 
 	var gameProto,
-		_mobile = SB.util.isMobile(),
-		_video = false,
+		_mobile = LIB.util.isMobile(),
+		_video = $settings.showIntroVideo$,
 		_bEvent = _mobile ? 'touchstart' : 'click',
-
 		_baseEndPhrase = '<i>You</i> need',
 		_endPhrases = 'skills|focus|passion|the right partner|the essential|another perspective|to go further'.split('|'),
-
 		_lifeUpCutoff = 1E5,
 		_icon,
 		_currentPowerUp,
-		
 		_loadingDiv = '<div class="loading"></div>',
-		
 		_powerAppearDelay = [2,5];
 
-	SB.events.avoidVerticalScroll();
+	LIB.events.avoidVerticalScroll();
 
-	SB.css.fontAwesome();
+	LIB.css.fontAwesome();
 
-	SB.Game = function () {
+	NS.Game = function () {
 		this.canvas = null;
 		this.ctx = null;
 		this.score = 0;
+		this.infoPanelVisible = false;
 		this.start();
 	};
 
-	gameProto = SB.Game.prototype;
+	gameProto = NS.Game.prototype;
 	
 
 	gameProto._currentPowerup = false;
@@ -40,18 +37,18 @@
 */	
 	gameProto.start = function () {
 	
-		SB.s.reset();
-		SB.Channel('boing').reset();
+		NS.s.reset();
+		LIB.Channel('boing').reset();
 
 		
-		this.viewport = SB.util.getViewportSize();
+		this.viewport = LIB.util.getViewportSize();
 
 		this.createPlayground()
 			.renderPanels()
 			.gameReady();
 
-		SB.events.disableRightClick();
-		console.debug('game started');
+		LIB.events.disableRightClick();
+		console.log('game started');
 	}
 
 	/**
@@ -62,7 +59,7 @@
 
 		var G = this;
 
-		SB.Widgzard.render({
+		LIB.Widgzard.render({
 			content : [{
 				attrs : {"class" : "logo"}
 			},{
@@ -86,7 +83,7 @@
 					G.I = new Image;
 					G.I.width = G.I.height = size;
 
-					SB.css.style(G.I, {width : size + 'px', height : size + 'px'});
+					LIB.css.style(G.I, {width : size + 'px', height : size + 'px'});
 					
 					G.I.onload = function () {
 						var ctx = $canvas.getContext('2d'),
@@ -102,24 +99,23 @@
 						G.speedX = 0;
 						G.speedY = 0;
 						G.accX = 0;
-						G.accY = 1.6;
+						G.accY = $settings.acceleration$;
 
 						// clean canvas
 						ctx.clearRect(0, 0, $canvas.width, $canvas.height);
 
 						// draw the logo
 						ctx.drawImage(G.I, x0, y0, size, size);//, x0+110, y0+110, 0, 0, size, size);
-	
 						// @ first touch/click start the movement
 						// 
-						SB.events.one($canvas, _bEvent, beg);
+						LIB.events.one($canvas, _bEvent, beg);
 
 						function beg(e) {
-							// !_mobile && SB.boing();
+							// !_mobile && LIB.boing();
 							
 							// get the coord of the event
 							//
-							var coord = SB.events.coord(e),
+							var coord = LIB.events.coord(e),
 								left = coord[0],
 								dist = G.viewport.width/2 - left;
 
@@ -133,136 +129,136 @@
 
 						function start () {
 
-							console.log('start')
-							
+							console.log('start');
+							LIB.Channel('boing').pub('start');
 							var i = 0,
-							tx, ty,
-							t,
-							rotSpeed,
-							rot,
-							rot0 = 0,
-							baseMultiplier = 0.1,
-							multiplier = baseMultiplier,
-							running = false,
-							visible = true,
-							left,
-							move = function () {
+								tx, ty,
+								t,
+								rotSpeed,
+								rot,
+								rot0 = 0,
+								baseMultiplier = 0.1,
+								multiplier = baseMultiplier,
+								running = false,
+								visible = true,
+								left,
+								move = function () {
 
-								
-								running = true;
-								
-								// gravity
-								// 
-								G.speedX = v0X + i * G.accX;
-								G.speedY = v0Y + i * G.accY;
-								
-								tx = x0 + i * v0X + 1/2 * i * i * G.accX;
-								ty = y0 + i * v0Y + 1/2 * i * i * G.accY;
-
-								ctx.clearRect(0, 0, $canvas.width, $canvas.height);
-
-								rotSpeed = G.speedX;
-								rot = (rot0 + i * rotSpeed) % 360;
-								SB.canvas.drawRotatedImage(ctx, G.I, tx, ty, rot, size)
-
-								
-								SB.Channel('boing').pub('scoreUp', [multiplier]);
-								check();
-								i++;
-							},
-							editPath = function (e) {
-
-								// if not visible (up)
-								// break
-								if (!visible || !running) {
-									return false;
-								}
-								
-								var coord = SB.events.coord(e),
-									left = coord[0] - G.I.width / 2,
-									dist = tx - left;
-
-								v0X = v0X + 50 * dist / G.viewport.width + Math.random()*(Math.random()>.5 ? -1 : 1);
-								
-								// set rot0 to the current status
-								//
-								rot0 = rot;
-								
-								i = 1;
-								x0 = tx;
-								y0 = ty;
-								
-								// async sound
-								// !_mobile && window.setTimeout(function (){SB.boing();}, 0);
-
-								if (G.speedY < 0) {
-									// speed up 10%
-									// 
-									v0Y = 1.02 * v0Y;
-								} else {
-									// bounce at 90%
-									v0Y = -.95 * G.speedY;
-								}
-
-								SB.Channel('boing').pub('scoreStore', [coord[0] > x0]);
-							},
-
-							check = function () {
-								if (
-									( (tx + G.I.width/2) < 0 || (tx + G.I.width/2) > G.viewport.width)
-									||
-									( (ty + G.I.height/2) > G.viewport.height)
-								) {
-									clearInterval(t);
-									SB.events.off($canvas, _bEvent, editPath);
-									SB.Channel('boing').pub('collision');
 									
-									running = false;
-								}
+									running = true;
+									
+									// gravity
+									// 
+									G.speedX = v0X + i * G.accX;
+									G.speedY = v0Y + i * G.accY;
+									
+									tx = x0 + i * v0X + 1/2 * i * i * G.accX;
+									ty = y0 + i * v0Y + 1/2 * i * i * G.accY;
 
-								SB.Channel('boing').pub('notifyPosition', [tx, ty]);
+									ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+
+									rotSpeed = G.speedX;
+									rot = (rot0 + i * rotSpeed) % 360;
+									LIB.canvas.drawRotatedImage(ctx, G.I, tx, ty, rot, size)
+
+									
+									LIB.Channel('boing').pub('scoreUp', [multiplier]);
+									check();
+									i++;
+								},
+								editPath = function (e) {
+
+									// if not visible (up)
+									// break
+									if (!visible || !running) {
+										return false;
+									}
+									
+									var coord = LIB.events.coord(e),
+										left = coord[0] - G.I.width / 2,
+										dist = tx - left;
+
+									v0X = v0X + 50 * dist / G.viewport.width + Math.random()*(Math.random()>.5 ? -1 : 1);
+									
+									// set rot0 to the current status
+									//
+									rot0 = rot;
+									
+									i = 1;
+									x0 = tx;
+									y0 = ty;
+									
+									// async sound
+									// !_mobile && window.setTimeout(function (){LIB.boing();}, 0);
+
+									if (G.speedY < 0) {
+										// speed up 10%
+										// 
+										v0Y = 1.02 * v0Y;
+									} else {
+										// bounce at 90%
+										v0Y = -.95 * G.speedY;
+									}
+
+									LIB.Channel('boing').pub('scoreStore', [coord[0] > x0]);
+								},
+
+								check = function () {
+									if (
+										( (tx + G.I.width/2) < 0 || (tx + G.I.width/2) > G.viewport.width)
+										||
+										( (ty + G.I.height/2) > G.viewport.height)
+									) {
+										clearInterval(t);
+										LIB.events.off($canvas, _bEvent, editPath);
+										LIB.Channel('boing').pub('collision');
+										
+										running = false;
+									}
+
+									LIB.Channel('boing').pub('notifyPosition', [tx, ty]);
 
 
-								if (ty < 0) {
+									if (ty < 0) {
 
-									// SB.Channel('boing').pub('outNotify', [tx]);
+										// LIB.Channel('boing').pub('outNotify', [tx]);
 
-									SB.Channel('boing').pub('outNotifyShow', [tx]);
+										LIB.Channel('boing').pub('outNotifyShow', [tx]);
 
-									visible = false;
-									multiplier = 1 + -ty / 10;
-								} else {
+										visible = false;
+										multiplier = 1 + -ty / 10;
+									} else {
 
-									SB.Channel('boing').pub('outNotifyHide');
+										LIB.Channel('boing').pub('outNotifyHide');
 
-									visible = true;
-									multiplier = baseMultiplier;
-								}
-							};
+										visible = true;
+										multiplier = baseMultiplier;
+									}
+								};
 							self._icon = null;
 							self._currentPowerUp = null;
 							
 
-							// SB.Channel('boing').pub('launchNextPowerup');
+							// LIB.Channel('boing').pub('launchNextPowerup');
 							
 							// main touch click event listener
 							//
-							SB.events.on($canvas, _bEvent, editPath);
+							LIB.events.on($canvas, _bEvent, editPath);
 
 							//when help is opened disable touches&clicks
 							//
-							SB.Channel('boing').sub('openHelp', function () {
+							LIB.Channel('boing').sub('openHelp', function () {
 								running = false;
 							});
 
-							SB.Channel('boing').sub('closeHelp', function () {
+							LIB.Channel('boing').sub('closeHelp', function () {
 								running = true;
 							});
 
 							t = window.setInterval(move, 25);
 						}
 					};
-					G.I.src = '$BALL$';
+					G.I.src = 'css/img/$BALL$';
 
 					self.done();
 				}
@@ -307,9 +303,10 @@
 					var self = this,
 						$elf = self.node;
 
-					SB.Channel('boing').sub('boing', function () {
+					LIB.Channel('boing').sub('boing', function () {
+						
 						var ab = self.getNode('audioBag').node;
-						SB.Widgzard.render({
+						LIB.Widgzard.render({
 							target : ab,
 							content : [{
 								tag : 'audio',
@@ -335,14 +332,17 @@
 								end : function () {
 									var self = this,
 										$elf = this.node;
-									SB.events.on($elf, 'ended', function () {
-										SB.dom.remove($elf);
-									})
-									$elf.play();
+									LIB.events.on($elf, 'ended', function () {
+										LIB.dom.remove($elf);
+									});
+									// LIB.Channel('boing').pub('start', function () {
+										$elf.play();
+									// });
 								}
 
 							}]
 						}, true);
+						
 					});
 
 					this.done();
@@ -379,7 +379,7 @@
 
 
 
-		console.debug('playground drawn');
+		console.log('playground drawn');
 		return this;
 	};
 
@@ -401,7 +401,7 @@
 			})();
 
 
-		G.panel = SB.Widgzard.render({
+		G.panel = LIB.Widgzard.render({
 			content : [{
 				style : {position: 'absolute', top : '0px', width:'100%'},
 				content : [{
@@ -421,20 +421,20 @@
 								
 								cursorForLifes = 0;
 
-							SB.Channel('boing').sub('scoreUp', function (topic, mult) {
+							LIB.Channel('boing').sub('scoreUp', function (topic, mult) {
 
 								G.score += mult*1;
 								if (~~(G.score / _lifeUpCutoff) != cursorForLifes) {
 									cursorForLifes++;
-									SB.Channel('boing').pub('lifeUp');
+									LIB.Channel('boing').pub('lifeUp');
 								}
 
-								$elf.innerHTML = SB.util.formatNumber(parseFloat(G.score.toFixed(1), 10));
+								$elf.innerHTML = LIB.util.formatNumber(parseFloat(G.score.toFixed(1), 10));
 
 								// var s = parseFloat($elf.innerHTML, 10),
 								// 	next = parseFloat(s, 10) + mult*1;
 								// if (~~(s/G._lifeUpCutoff) != ~~(next/G._lifeUpCutoff)) {
-								// 	SB.Channel('boing').pub('lifeUp');
+								// 	LIB.Channel('boing').pub('lifeUp');
 								// }
 								// $elf.innerHTML = next.toFixed(1);
 								
@@ -452,30 +452,30 @@
 						var self = this,
 							$elf = self.node;
 
-						SB.Channel('boing').sub('collision', function() {
+						LIB.Channel('boing').sub('collision', function() {
 							var lifes = $elf.childNodes;
 							
 							if (lifes.length) {
-								SB.Channel('boing').pub('lifeLost');
-								SB.dom.remove(lifes[0]);
+								LIB.Channel('boing').pub('lifeLost');
+								LIB.dom.remove(lifes[0]);
 							} else {
-								SB.Channel('boing').pub('gameOver');
+								LIB.Channel('boing').pub('gameOver');
 							}
 							
 						});
 
-						SB.Channel('boing').sub('lifeUp', function () {
+						LIB.Channel('boing').sub('lifeUp', function () {
 							// adding just one the gears do not mantain the synchro
 							// but when is removed one the synchronization is ok thus
 							// I used a stupid trick to ensure gears stay in synchro
 							// add two and then remove one
 							// 
-							SB.Widgzard.render({
+							LIB.Widgzard.render({
 								target : $elf,
 								content : [life, life],
 								cb : function () {
 									var lifes = $elf.childNodes;
-									SB.dom.remove(lifes[0]);
+									LIB.dom.remove(lifes[0]);
 								}
 							});
 						});
@@ -488,11 +488,13 @@
 					var self = this,
 						$elf = self.node;
 
-					SB.Channel('boing').sub('openHelp', function () {
-						SB.css.style($elf, {opacity: 0.2});
+					LIB.Channel('boing').sub('openHelp', function () {
+						G.infoPanelVisible = true;
+						LIB.css.style($elf, {opacity: 0.2});
 					});
-					SB.Channel('boing').sub('closeHelp', function () {
-						SB.css.style($elf, {opacity: 1});
+					LIB.Channel('boing').sub('closeHelp', function () {
+						G.infoPanelVisible = false;
+						LIB.css.style($elf, {opacity: 1});
 					});
 					self.done();
 				}
@@ -508,12 +510,12 @@
 					var self = this,
 						$elf = self.node;
 
-					SB.events.on($elf, _bEvent, function () {
-						SB.css.style($elf, {display: 'none'});
-						SB.Channel('boing').pub('openHelp');
+					LIB.events.on($elf, _bEvent, function () {
+						LIB.css.style($elf, {display: 'none'});
+						LIB.Channel('boing').pub('openHelp');
 					});
-					SB.Channel('boing').sub('closeHelp', function () {
-						SB.css.style($elf, {display: 'block'});
+					LIB.Channel('boing').sub('closeHelp', function () {
+						LIB.css.style($elf, {display: 'block'});
 					});
 
 					self.done();
@@ -539,13 +541,14 @@
 							var self = this,
 								$elf = self.node,
 								close = function () {
-									SB.css.style(self.parent.node, {display: 'none'});
-									SB.Channel('boing').pub('closeHelp');
+									LIB.css.style(self.parent.node, {display: 'none'});
+									LIB.Channel('boing').pub('closeHelp');
 								}
-							SB.events.onEsc(close);
-							SB.events.on($elf, _bEvent, close);
-							SB.Channel('boing').sub('openHelp', function () {
-								SB.css.style(self.parent.node, {display: 'block'});
+							LIB.events.onEsc(close);
+							LIB.events.on($elf, _bEvent, close);
+							LIB.Channel('boing').sub('openHelp', function () {
+								G.infoPanelVisible = true;
+								LIB.css.style(self.parent.node, {display: 'block'});
 							});
 							this.done();
 						}
@@ -580,10 +583,10 @@
 							var self = this,
 								$elf = self.node,
 								close = function () {
-									SB.css.style(self.getNode('helpWindow').node, {display: 'none'});
-									SB.Channel('boing').pub('closeHelp');
+									LIB.css.style(self.getNode('helpWindow').node, {display: 'none'});
+									LIB.Channel('boing').pub('closeHelp');
 								}
-							SB.events.on($elf, _bEvent, close);
+							LIB.events.on($elf, _bEvent, close);
 							this.done();
 						}
 
@@ -602,20 +605,20 @@
 				cb : function () {
 					var self = this,
 						$elf = self.node;
-					SB.Channel('boing').sub('lifeLost', function () {
+					LIB.Channel('boing').sub('lifeLost', function () {
 						
 						$elf.innerHTML = [
 							'...',
 							_baseEndPhrase,
 							' ',
-							_endPhrases[SB.util.rand(0, _endPhrases.length - 1)],
+							_endPhrases[LIB.util.rand(0, _endPhrases.length - 1)],
 							'...'
 						].join('');
 
-						SB.css.style($elf, {display: 'block'});
+						LIB.css.style($elf, {display: 'block'});
 						
 						window.setTimeout(function () {
-							SB.css.style($elf, 'display', 'none');
+							LIB.css.style($elf, 'display', 'none');
 
 							G.I.onload();
 
@@ -647,8 +650,8 @@
 							cb : function () {
 								var self = this,
 									$elf = self.node;
-								SB.events.on($elf, 'click', function () {
-									SB.Channel('boing').pub('hideGameover');
+								LIB.events.on($elf, 'click', function () {
+									LIB.Channel('boing').pub('hideGameover');
 									G.start();
 								});
 								self.done();
@@ -661,14 +664,18 @@
 					var self = this,
 						$elf = self.node;
 
-					SB.Channel('boing').sub('gameOver', function () {
-						SB.s.snd(G.score);
-						SB.css.style($elf, {display: 'block'});
+					LIB.Channel('boing').sub('gameOver', function () {
+						
+						//
+						// avoid it for the moment
+						// NS.s.snd(G.score);
+
+						LIB.css.style($elf, {display: 'block'});
 						G.score = 0;
-						self.getNode('rank').data.updateRank();
+						// self.getNode('rank').data.updateRank();
 					});
-					SB.Channel('boing').sub('hideGameover', function () {
-						SB.css.style($elf, {display: 'none'});
+					LIB.Channel('boing').sub('hideGameover', function () {
+						LIB.css.style($elf, {display: 'none'});
 					});
 					this.done();
 				}
@@ -676,7 +683,7 @@
 		});
 
 		// .panel.getNode('powerup_spec').data.start('');
-		// console.debug(t.getNode('powerup_spec').node);
+		// console.log(t.getNode('powerup_spec').node);
 
 		return this;
 	};
@@ -687,23 +694,23 @@
 	 */
 	gameProto.gameReady = function () {
 
-		console.debug("ONCE: Game ready")
+		console.log("game ready")
 
 		var G = this,
 			self = this,
 			ctx = self.ctx,
 			cnv = self.canvas;
 
-		SB.boing = function () {SB.Channel('boing').pub('boing');};
+		NS.boing = function () {LIB.Channel('boing').pub('boing');};
 		
 		// first boing	
-		SB.boing();
+		NS.boing();
 		
-
+		/*
 		_video && !_mobile && window.setTimeout(function (){
 			var trg = window.body;
 
-			SB.Widgzard.render({
+			NS.Widgzard.render({
 				target : trg,
 				content : [{
 					tag : 'video',
@@ -726,11 +733,11 @@
 						var self = this,
 							$elf = this.node,
 							play = function () {$elf.play();},
-							position = SB.util.adaptive.getVideoCoordinates({
+							position = NS.util.adaptive.getVideoCoordinates({
 								width : G.viewport.width,
 								height : G.viewport.height
 							});
-						SB.css.style($elf, {
+						NS.css.style($elf, {
 							top : position.top + 'px',
 							left : position.left + 'px',
 							width : position.width + 'px',
@@ -738,34 +745,34 @@
 						})	
 
 						$elf.volume = 0;
-						SB.events.on($elf, 'loadeddata', play);
+						NS.events.on($elf, 'loadeddata', play);
 						this.done();
 					}
 				}]
 			});
 		}, 3000 + Math.random()*3000);
-
+		*/
 
 		//fade in
 		//
-		SB.animate.transform(self.canvas, {opacity: 1}, 1000);
+		LIB.animate.transform(self.canvas, {opacity: 1}, 1000);
 
 
 		window.setTimeout(function () {	
-			SB.dom.removeClass(document.body, 'loading');
-			SB.css.style(cnv, {backgroundColor : 'transparent'});
+			LIB.dom.removeClass(document.body, 'loading');
+			LIB.css.style(cnv, {backgroundColor : 'transparent'});
 		}, 1100);
 		
 
-		SB.Channel('boing').sub('scoreStore', function (topic, versus) {
-			SB.s.str(G.score, versus);
+		LIB.Channel('boing').sub('scoreStore', function (topic, versus) {
+			NS.s.str(G.score, versus);
 		});
 
 		self.startPowerUpsManager();
 
 		
 
-		console.debug('ready to play');
+		console.log('ready to play');
 		
 		/*
 		this.ctx.beginPath();

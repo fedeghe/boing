@@ -1,8 +1,8 @@
-SB.makeNS('SB/cookie');
+LIB.makeNS('$LIB$/cookie');
 
 ~function () {
 
-	SB.cookie = {
+	LIB.cookie = {
 		cookie_nocookiesaround : false,
 
 		set : function (name, value, expires, path, domain, secure) {

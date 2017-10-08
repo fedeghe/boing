@@ -99,20 +99,20 @@
             }
         };
 
-    SB.html5 = {
+    LIB.html5 = {
         exitFullscreen : _.html5.exitFullscreen,
         exitVideoFullscreen : _.html5.exitVideoFullscreen,
         enterFullscreen : _.html5.enterFullscreen,
         cancelFullscreen : _.html5.cancelFullscreen,
         onExitFullScreen : function (func) {
 
-            SB.events.on(document, "fullscreenchange", function () {
+            LIB.events.on(document, "fullscreenchange", function () {
                 !document.fullscreen && func();
             });
-            SB.events.on(document, "mozfullscreenchange", function () {
+            LIB.events.on(document, "mozfullscreenchange", function () {
                 !document.mozFullScreen && func();
             });
-            SB.events.on(document, "webkitfullscreenchange", function () {
+            LIB.events.on(document, "webkitfullscreenchange", function () {
                 !document.webkitIsFullScreen && func();
             });
         },

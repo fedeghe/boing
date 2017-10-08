@@ -5,7 +5,7 @@
 // private section
 
 // public section
-SB.string = {
+LIB.string = {
     /**
      * [ description]
      * @param  {Array[int]} code [description]

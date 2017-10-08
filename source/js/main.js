@@ -1,6 +1,10 @@
 (function (){
+	
+	var NS = {};
+
 	$$game.js$$
-	SB.events.ready(function (){
-		new SB.Game();
+	
+	LIB.events.ready(function (){
+		new NS.Game();
 	});
 })();

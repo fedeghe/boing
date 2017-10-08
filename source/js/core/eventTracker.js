@@ -1,8 +1,8 @@
-SB.makeNS('SB/track', function () {
+LIB.makeNS('$LIB$/track', function () {
 
-	var SB_tracker = (function () {
+	var LIB_tracker = (function () {
 
-			var endPoint = SB.engy.config.eventEntryPoint,
+			var endPoint = LIB.engy.config.eventEntryPoint,
 				data = {
 					// believe it or not that id locked by the ADB
 					// a_id : 'sm_creativeID' in window ? sm_creativeID : 0,
@@ -25,10 +25,10 @@ SB.makeNS('SB/track', function () {
 			console.log(ev);
 			debug(msg);
 
-			SB.io.getJson(
+			LIB.io.getJson(
 				endPoint,
 				function () {},
-				SB.object.extend(data, {
+				LIB.object.extend(data, {
 					"event" : ev + ""
 				})
 			);
@@ -40,22 +40,22 @@ SB.makeNS('SB/track', function () {
 			console.log(msg);
 			console.log('Arguments passed : ');
 			console.log(ev, url);
-			SB.io.getJson(
+			LIB.io.getJson(
 				endPoint,
 				function () {
 					window.open(url);
 				},
-				SB.object.extend(data, {
+				LIB.object.extend(data, {
 					"event" : ev + "",
 					clickUrl : url
 				})
 			);
-			SB.io.getJson(
+			LIB.io.getJson(
 				endPoint,
 				function () {
 					console.log('click event logged')
 				},
-				SB.object.extend(data, {
+				LIB.object.extend(data, {
 					"event" : "click",
 					clickUrl : url
 				})
@@ -67,12 +67,12 @@ SB.makeNS('SB/track', function () {
 			var msg = '[TEMPORARY Stailabounce IMPLEMENTATION on action `expand`]';
 			console.log(msg);
 		
-			SB.io.getJson(
+			LIB.io.getJson(
 				endPoint,
 				function () {
 					console.log('expand event logged')
 				},
-				SB.object.extend(data, {
+				LIB.object.extend(data, {
 					"event" : 'expand'
 				})
 			);
@@ -81,12 +81,12 @@ SB.makeNS('SB/track', function () {
 		function do_contract(){
 			var msg = '[TEMPORARY Stailabounce IMPLEMENTATION on action `contract`]';
 			console.log(msg);
-			SB.io.getJson(
+			LIB.io.getJson(
 				endPoint,
 				function () {
 					console.log('collapse event logged')
 				},
-				SB.object.extend(data, {
+				LIB.object.extend(data, {
 					"event" : 'contract'
 				})
 			);
@@ -98,7 +98,7 @@ SB.makeNS('SB/track', function () {
 			console.log(msg);
 			console.log('Arguments passed : ');
 			console.log(f);
-			SB.events.ready(f);
+			LIB.events.ready(f);
 			return true;
 		}
 
@@ -119,10 +119,10 @@ SB.makeNS('SB/track', function () {
 			var msg = '[TEMPORARY Stailabounce IMPLEMENTATION on action `interaction`]';
 			console.log(msg);
 
-			SB.io.getJson(
+			LIB.io.getJson(
 				endPoint,
 				function () {},
-				SB.object.extend(data, {
+				LIB.object.extend(data, {
 					"event" : 'interaction'
 				})
 			);
@@ -134,14 +134,14 @@ SB.makeNS('SB/track', function () {
 				return;
 			}
 			
-			pars = SB.object.extend(pars, {
+			pars = LIB.object.extend(pars, {
 				adId : sm_creativeID,
 				cpId : sm_campaignID,
 				liId : sm_lineItemID,
 				"event" : "clickThrough"
 			});
 		
-			SB.io.getJson(
+			LIB.io.getJson(
 				endPoint,
 				function () {
 					console.log('DEBUG: ', pars);
@@ -156,13 +156,13 @@ SB.makeNS('SB/track', function () {
 				return;
 			}
 			'type' in pars || (pars.type="no type specified");
-			pars = SB.object.extend(pars, {
+			pars = LIB.object.extend(pars, {
 				adId : sm_creativeID,
 				cpId : sm_campaignID,
 				liId : sm_lineItemID
 			});
 		
-			SB.io.getJson(
+			LIB.io.getJson(
 				endPoint,
 				function () {
 					console.log('DEBUG: ', pars);
@@ -188,54 +188,54 @@ SB.makeNS('SB/track', function () {
 
 	return {
 		"event" : function(p) {
-			return !SB.mute && SB_tracker['event'](p);
+			return !LIB.mute && LIB_tracker['event'](p);
 		},
 		
 		dynamicClick : function (p1, p2) {
-			return !SB.mute && SB_tracker.dynamicClick(p1, p2);
+			return !LIB.mute && LIB_tracker.dynamicClick(p1, p2);
 		},
 		
 		expand : function () {
-			return !SB.mute && SB_tracker.expand();
+			return !LIB.mute && LIB_tracker.expand();
 		},
 		
 		contract : function () {
-			return !SB.mute && SB_tracker.contract();
+			return !LIB.mute && LIB_tracker.contract();
 		},
 		
 		ready : function (f) {
-			return !SB.mute && SB_tracker.ready(f);
+			return !LIB.mute && LIB_tracker.ready(f);
 		},
 		
 		getContent : function (p1, p2) {
-			return !SB.mute && SB_tracker.getContent(p1, p2);
+			return !LIB.mute && LIB_tracker.getContent(p1, p2);
 		},
 
 		// interaction is not present in ADTECH, thus check
 		// 
 		interaction : function () {
-			return !SB.mute
+			return !LIB.mute
 			&&
-			'interaction' in SB_tracker
+			'interaction' in LIB_tracker
 			&&
-			typeof SB_tracker.interaction == 'function'
+			typeof LIB_tracker.interaction == 'function'
 			&&
-			SB_tracker.interaction();
+			LIB_tracker.interaction();
 		},
 		pixel : function (pixel_url) {
-			if(SB.mute) return false;
+			if(LIB.mute) return false;
 
-			if (SB.util.isArray(pixel_url)) {
+			if (LIB.util.isArray(pixel_url)) {
 				for (var i = 0, l = pixel_url.length; i < l; i++) {
-					SB.track.pixel(pixel_url[i]);
+					LIB.track.pixel(pixel_url[i]);
 				}
 			}
 			var i = new Image(1, 1);
 			i.src = pixel_url;
 			return true;
 		},
-		clickThrough : SB_tracker.clickThrough,
-		debug : SB_tracker.debug
+		clickThrough : LIB_tracker.clickThrough,
+		debug : LIB_tracker.debug
 	};
 
 	

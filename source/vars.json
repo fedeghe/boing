@@ -1,6 +1,6 @@
 {
 	"COMPANY" : "ME",
-	"APPNAME" : "DaisyBoing",
+	"APPNAME" : "DAISY BOING",
 	"AUTHOR" : "Federico Ghedina",
 	"DOMAIN" : "http://www.jmvc.org",
 	"LIB_EXT" : ".js",
@@ -9,17 +9,21 @@
 	"LANGS_URI" : "/i18n",
 	"DEFAULT_LANG" : "en",
 	"VERSION" : "0.1",
-	"BGIMAGE" : "daisy.svg",
+	"BALL" : "daisy.svg",
 	"LIFES" : 3,
 	"SUBMIT_URL" : "http://www.boing2.dev/score.php",
 	"FONTAWESOME" : "css/font-awesome-4.5.0/font-awesome.min.css",
-	
-	"BALL" : "css/img/daisy.svg",
+	"NS" : "DB",
+	"LIB" : "LIB",
 	"daisy" : {
-		"size" : 76,
-		"color" : {
-			"inner" : "#ff6600",
-			"outer" : "white"
+		"size" : 60,
+		"color" : { 
+			"inner" : "#f60",
+			"outer" : "#b5f"
 		}
+	},
+	"settings" : {
+		"showIntroVideo" : true,
+		"acceleration" : 2
 	}
 }

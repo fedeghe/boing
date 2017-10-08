@@ -377,7 +377,7 @@
     function render (params, clean) {
 
         if ((typeof params).match(/string/i)) {
-            SB.io.get(params, function (j) {
+            LIB.io.get(params, function (j) {
                 window.eval(j);
             });
             return;
@@ -649,7 +649,7 @@
         render({target : trg, content : [{html : "no content"}]}, true);
     }
     
-    // SB.Widgzard.load('js/_index.js');
+    // LIB.Widgzard.load('js/_index.js');
     function load (src) {
         var s = document.createElement('script');
         document.getElementsByTagName('head')[0].appendChild(s);
@@ -725,7 +725,7 @@
     };
 
     // publish module
-    SB.makeNS('SB/Widgzard', {
+    LIB.makeNS('$LIB$/Widgzard', {
         render : render,
         cleanup : cleanup,
         get : get,

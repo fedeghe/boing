@@ -14,7 +14,7 @@ body {
 }
 body.loading {
 	.logo {
-		background: @bgcolor url(img/$BGIMAGE$) no-repeat;
+		// background: @bgcolor url(img/$BGIMAGE$) no-repeat;
 		background-position: center center;
 		background-size: 95% 95%;
 	}
@@ -135,10 +135,10 @@ body {
 	
 		.life {
 			display:inline-block;
-			margin-right:-16px;
-			width: 60px;
-			height:60px;
-			background-image:url(img/$BGIMAGE$);
+			margin-right:-!{$daisy.size$/4}!px;
+			width: $daisy.size$px;
+			height:$daisy.size$px;
+			background-image:url(img/$BALL$);
 			-webkit-animation-duration:.5s;
 			-webkit-animation-iteration-count:infinite;
 			-webkit-animation-timing-function:linear;
@@ -398,7 +398,7 @@ body {
 	}
 
 	div.loading {
-		background: @bgcolor url(img/$BGIMAGE$) no-repeat;
+		// background: @bgcolor url(img/$BGIMAGE$) no-repeat;
 		width:200px;
 		height:200px;
 		animation-duration: 1s;

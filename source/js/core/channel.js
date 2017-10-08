@@ -2,7 +2,7 @@
  * [Channel description]
  * @param {[type]} n [description]
  */
-SB.Channel = (function () {
+LIB.Channel = (function () {
     var channels = {},
 
         // function added to free completely

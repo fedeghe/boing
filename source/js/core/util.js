@@ -1,8 +1,8 @@
-SB.makeNS('SB/util', {
+LIB.makeNS('$LIB$/util', {
     uniqueid: new function () {
         var count = 0,
             self = this;
-        this.prefix = 'SB';
+        this.prefix = LIB;
         this.toString = function () {
             ++count;
             return  self.prefix + count;
@@ -104,7 +104,7 @@ SB.makeNS('SB/util', {
                     /* @ least check for ns, in case of dots
                     */
                     if ($1.match(/\./)) {
-                        last = SB.checkNS($1 ,obj);
+                        last = LIB.checkLIB($1 ,obj);
                         if (last) {
                             _t = enc ? encodeURIComponent(last) : last;
                             return typeof last === 'function' ? last($1) : last;
@@ -226,20 +226,20 @@ SB.makeNS('SB/util', {
             alfanum : new RegExp(/^[A-z0-9]*$/)
         },
         email : function (str) {
-            return str.match(SB.util.match.rex.email);
+            return str.match(LIB.util.match.rex.email);
         },
         url : function (str) {
-            return str.match(SB.util.match.rex.url);
+            return str.match(LIB.util.match.rex.url);
         },
         alfa : function (str, min, max) {
             max && min > max && (max = min);
             return str.match(new RegExp('^[A-z\s]' + (~~min ? '{' + min + ',' + (~~max ? max : '') + '}' : '*') + '$'));
         },
         alfanum : function (an) {
-            return an.match(SB.util.match.rex.alfanum);
+            return an.match(LIB.util.match.rex.alfanum);
         },
         floatnum : function (fn) {
-            return (fn + '').match(SB.util.match.rex.floatnum);
+            return (fn + '').match(LIB.util.match.rex.floatnum);
         }
     },
     getScrollingPosition : function () {
@@ -411,9 +411,9 @@ SB.makeNS('SB/util', {
     }
 });
 
-SB.getFromTop = function (url) {
-    var p = SB.Widgzard.Promise.create();
-    SB.io.getJson('http://www.smwidgzard.dev/get.php?url=' + encodeURIComponent(encodeURIComponent(url)), function (r) {
+LIB.getFromTop = function (url) {
+    var p = LIB.Widgzard.Promise.create();
+    LIB.io.getJson('http://www.smwidgzard.dev/get.php?url=' + encodeURIComponent(encodeURIComponent(url)), function (r) {
         p.done(r);
     });
     return p;
@@ -480,7 +480,7 @@ result = true;
 
 for(var i=0, l = benchmarc.length; i < l && result ; i++) {
   
-  var r = SB.util.size2layout({requestedSize : benchmarc[i].input}),
+  var r = LIB.util.size2layout({requestedSize : benchmarc[i].input}),
    local;
   if(!r) {
      if (r !== benchmarc[i].output){

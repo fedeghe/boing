@@ -1,7 +1,7 @@
-SB.makeNS('SB/i18n');
+LIB.makeNS('$LIB$/i18n');
 (function () {
 	var data = {};
-	SB.i18n = {
+	LIB.i18n = {
 		load : function (dict) {
 			data = dict;
 		},
@@ -25,7 +25,7 @@ SB.makeNS('SB/i18n');
 		 */
 		dynamicLoad : function (lo) {
 			for (var label in lo) {
-				SB.lang in lo[label] && (data[label] = lo[label][SB.lang]);
+				LIB.lang in lo[label] && (data[label] = lo[label][LIB.lang]);
 			}
 		},
 		check : function (lab) {

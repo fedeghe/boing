@@ -1,4 +1,4 @@
-SB.makeNS('SB/events');
+LIB.makeNS('$LIB$/events');
 
 ~function () {
 
@@ -54,7 +54,7 @@ SB.makeNS('SB/events');
 
             function store(el, evnt, cb) {
 
-                var nid = SB.dom.idize(el); // _.events.nodeid(el);
+                var nid = LIB.dom.idize(el); // _.events.nodeid(el);
                 !(evnt in _.events.bindings) && (_.events.bindings[evnt] = {});
 
                 !(nid in _.events.bindings[evnt]) && (_.events.bindings[evnt][nid] = []);
@@ -100,7 +100,7 @@ SB.makeNS('SB/events');
 
             //cb && (cb = this.fixCurrentTarget(cb, el));
 
-            var nodeid = SB.dom.idize(el), //_.events.nodeid(el),
+            var nodeid = LIB.dom.idize(el), //_.events.nodeid(el),
                 index, tmp, l;
 
             if ((evnt in _.events.bindings) && (nodeid in _.events.bindings[evnt])) {
@@ -131,7 +131,7 @@ SB.makeNS('SB/events');
             }
 
             //JMVC.W.exp = _.events.bindings;
-            index = SB.util.arrayFind(_.events.bindings[evnt][nodeid], cb);
+            index = LIB.util.arrayFind(_.events.bindings[evnt][nodeid], cb);
 
             if (index === -1) {
                 return false;
@@ -152,7 +152,7 @@ SB.makeNS('SB/events');
     };
     //
     // PUBLIC section
-    SB.events = {
+    LIB.events = {
 
 
         avoidVerticalScroll : function () {
@@ -201,8 +201,8 @@ SB.makeNS('SB/events');
         },
 
         blurAllAnchorClicks : function () {
-            SB.events.on(W, 'click', function (e) {
-                var target = SB.events.eventTarget(e); 
+            LIB.events.on(W, 'click', function (e) {
+                var target = LIB.events.eventTarget(e); 
                 target.tagName && target.tagName.toLowerCase() == 'a' && target.blur();
             });
         },
@@ -213,7 +213,7 @@ SB.makeNS('SB/events');
          * @return {[type]}    [description]
          */
         click : function (el) {
-            SB.events.fire(el, 'click');
+            LIB.events.fire(el, 'click');
         },
 
         /**
@@ -251,8 +251,8 @@ SB.makeNS('SB/events');
                 return false;
             }
             _.events.disabledRightClick = true;
-            var self = SB.events;
-            SB.dom.attr(WD.body, 'oncontextmenu', 'return false');
+            var self = LIB.events;
+            LIB.dom.attr(WD.body, 'oncontextmenu', 'return false');
             self.on(WD, 'mousedown', function(e) {
                 if (~~(e.button) === 2) {
                     self.preventDefault(e);
@@ -321,12 +321,12 @@ SB.makeNS('SB/events');
             node = node || WD;
             if (typeof evnt === 'undefined') {
                 for (var j in _.events.bindings) {
-                    SB.events.free(node, j);
+                    LIB.events.free(node, j);
                 }
                 return true;
             }
-            SB.dom.walk(node, function(n) {
-                SB.events.off(n, evnt);
+            LIB.dom.walk(node, function(n) {
+                LIB.events.off(n, evnt);
             }, 'pre');
         },
 
@@ -360,7 +360,7 @@ SB.makeNS('SB/events');
          * @return {[type]}    [description]
          */
         getCoord: function(el, e) {
-            var coord = SB.events.coord(e)
+            var coord = LIB.events.coord(e)
             coord[0] -= el.offsetLeft;
             coord[1] -= el.offsetTop;
             return coord;
@@ -392,7 +392,7 @@ SB.makeNS('SB/events');
          * @return {[type]}        [description]
          */
         one: function(el, tipo, fn) {
-            var self = SB.events,
+            var self = LIB.events,
                 i, l;
             if (el instanceof Array) {
                 for (i = 0, l = el.length; i < l; i++) {
@@ -417,12 +417,12 @@ SB.makeNS('SB/events');
          * || JMVC.events.clickout(tr, function (){console.debug('out')});
          */
         onEventOut: function(evnt, el, cb) {
-            var self = SB.events;
+            var self = LIB.events;
 
             self.on(WD.body, evnt, function f(e) {
                 var trg = self.eventTarget(e);
                 while (trg !== el) {
-                    trg = SB.dom.parent(trg);
+                    trg = LIB.dom.parent(trg);
                     if (trg === WD.body) {
                         self.off(WD.body, evnt, f);
                         return cb();
@@ -439,7 +439,7 @@ SB.makeNS('SB/events');
          */
         onEsc: function (cb, w) {
             w = w || W;
-            SB.events.on(w.document, 'keyup', function (e) {
+            LIB.events.on(w.document, 'keyup', function (e) {
                 if (e.keyCode == 27) {
                     cb.call(w, e);
                 }
@@ -453,8 +453,8 @@ SB.makeNS('SB/events');
          * @return {[type]}    [description]
          */
         onRight: function(el, f) {
-            SB.events.disableRightClick();
-            SB.events.on(el, 'mousedown', function(e) {
+            LIB.events.disableRightClick();
+            LIB.events.on(el, 'mousedown', function(e) {
 
                 if (~~(e.button) === 2) {
                     f.call(el, e);
@@ -556,7 +556,7 @@ SB.makeNS('SB/events');
          * @return {[type]}      [description]
          */
         scrollBy: function(left, top) {
-            SB.events.delay(function() {
+            LIB.events.delay(function() {
                 W.scrollBy(left, top);
             }, 1);
         },
@@ -568,7 +568,7 @@ SB.makeNS('SB/events');
          * @return {[type]}      [description]
          */
         scrollTo: function(left, top) {
-            SB.events.delay(function() {
+            LIB.events.delay(function() {
                 W.scrollTo(left, top);
             }, 1);
         },
@@ -610,7 +610,7 @@ SB.makeNS('SB/events');
          * @return {[type]} [description]
          */
         unload: function (){
-            SB.events.on(W, 'beforeunload', function (e) {
+            LIB.events.on(W, 'beforeunload', function (e) {
                 
                 var confirmationMessage = /\//;//'Are you sure to leave or reload this page?';//"\o/";
                 (e || window.event).returnValue = confirmationMessage;     //Gecko + IE
@@ -624,7 +624,7 @@ SB.makeNS('SB/events');
 
 
     // blur all clicks
-    SB.events.blurAllAnchorClicks();
+    LIB.events.blurAllAnchorClicks();
 
 
     if (!Event.prototype.preventDefault) {
@@ -646,7 +646,7 @@ SB.makeNS('SB/events');
         gd1 : false,
         getDirection : function (e) {
             var gd1 = this.gd1,
-                gd2 = SB.events.coord(e),
+                gd2 = LIB.events.coord(e),
                 d,
                 directions = [
                     'o','no', 'no',
@@ -657,14 +657,14 @@ SB.makeNS('SB/events');
                 ];
             
             d = Math.atan2(gd2[1] - gd1[1], gd2[0] - gd1[0]) * 180 / (Math.PI);
-            SB.events.drag.direction = d.toFixed(2);
-            SB.events.drag.orientation = directions[~~(((d + 180) % 360) / 22.5)] ;
+            LIB.events.drag.direction = d.toFixed(2);
+            LIB.events.drag.orientation = directions[~~(((d + 180) % 360) / 22.5)] ;
             return true;
         }
 
     };
 
-    SB.events.drag = {
+    LIB.events.drag = {
         
         direction : false,
         
@@ -681,15 +681,15 @@ SB.makeNS('SB/events');
 
                     _.events.drag.getDirection(e);
 
-                    var tmp = SB.events.coord(e),
+                    var tmp = LIB.events.coord(e),
                         dst = Math.sqrt((tmp[1] - _.events.drag.gd1[1]) * (tmp[1] - _.events.drag.gd1[1])
                             + (tmp[0] - _.events.drag.gd1[0]) * (tmp[0] - _.events.drag.gd1[0])
                         );
                     fMove.call(e, e, {
                         start : _.events.drag.gd1,
                         current : tmp,
-                        direction : SB.events.drag.direction,
-                        orientation : SB.events.drag.orientation,
+                        direction : LIB.events.drag.direction,
+                        orientation : LIB.events.drag.orientation,
                         distance : dst
                     });
                 },
@@ -698,9 +698,9 @@ SB.makeNS('SB/events');
                     // not for sure attached, will be caugth an exception
                     // by _.events.unbind
                     
-                    SB.events.off(el, 'mousemove');
-                    SB.events.off(el, 'touchmove');
-                    var tmp = SB.events.coord(e),
+                    LIB.events.off(el, 'mousemove');
+                    LIB.events.off(el, 'touchmove');
+                    var tmp = LIB.events.coord(e),
                         dst = Math.sqrt((tmp[1] - _.events.drag.gd1[1]) * (tmp[1] - _.events.drag.gd1[1])
                             +
                             (tmp[0] - _.events.drag.gd1[0]) * (tmp[0] - _.events.drag.gd1[0])
@@ -708,32 +708,32 @@ SB.makeNS('SB/events');
                     
                     fEnd.call(e, e, {
                         start : _.events.drag.gd1,
-                        current : SB.events.coord(e),
-                        direction : SB.events.drag.direction,
-                        orientation : SB.events.drag.orientation,
+                        current : LIB.events.coord(e),
+                        direction : LIB.events.drag.direction,
+                        orientation : LIB.events.drag.orientation,
                         distance : dst
                     });
                 };
 
-            SB.events.on(el, 'mousedown', function (e) {    
-                _.events.drag.gd1 = SB.events.coord(e);
+            LIB.events.on(el, 'mousedown', function (e) {    
+                _.events.drag.gd1 = LIB.events.coord(e);
                 fStart.call(e, e, {start : _.events.drag.gd1});
-                SB.events.on(el, 'mousemove', mmove);
+                LIB.events.on(el, 'mousemove', mmove);
             });
 
-            SB.events.on(el, 'mouseup', mup);
+            LIB.events.on(el, 'mouseup', mup);
             
-            SB.events.on(el, 'touchstart', function (e) {    
-                _.events.drag.gd1 = SB.events.coord(e);
+            LIB.events.on(el, 'touchstart', function (e) {    
+                _.events.drag.gd1 = LIB.events.coord(e);
                 fStart.call(e, e, {start : _.events.drag.gd1});
-                SB.events.on(el, 'touchmove', mmove);
+                LIB.events.on(el, 'touchmove', mmove);
             });
-            SB.events.on(el, 'touchend', mup);
+            LIB.events.on(el, 'touchend', mup);
         },
 
         off : function (el, f) {
-            SB.events.on(el, 'mouseup', f);
-            SB.events.on(el, 'touchend', f);
+            LIB.events.on(el, 'mouseup', f);
+            LIB.events.on(el, 'touchend', f);
         }
     };
 
@@ -741,7 +741,7 @@ SB.makeNS('SB/events');
 
 
     /* From Modernizr */
-    SB.events.transitionEnd = (function () {
+    LIB.events.transitionEnd = (function () {
         var n = document.createElement('fake'),
             k,
             trans = {
@@ -758,7 +758,7 @@ SB.makeNS('SB/events');
     })();
 
 
-    SB.events.doTab = function (el) {
+    LIB.events.doTab = function (el) {
         el.onkeydown = function (e) {
             var textarea = this,
                 input,
@@ -815,37 +815,3 @@ SB.makeNS('SB/events');
         }
     };
 }();
-
-SB.makeNS('SB/mobile');
-SB.mobile = {
-    deviceOrientation : function (f, absolute) {
-        
-        SB.events.on(window, 'deviceorientation', function (e) {
-            e.absolute = typeof absolute !== 'undefined'
-                        && (e.absolute = absolute);
-            f({
-                alpha : e.alpha,
-                beta : e.beta,
-                gamma : e.gamma,
-                e : e
-            });
-        });
-    },
-    deviceMotion : function (f) {
-        SB.events.on(window, 'devicemotion', function (e) {
-            f({
-                accX : e.acceleration.x,
-                accY : e.acceleration.y,
-                accZ : e.acceleration.z,
-                accGX : e.accelerationIncludingGravity.x,
-                accGY : e.accelerationIncludingGravity.y,
-                accGZ : e.accelerationIncludingGravity.z,
-                accAlpha : e.rotationRate.alpha,
-                accBeta : e.rotationRate.beta,
-                accGamma : e.rotationRate.gamma,
-                interval : e.interval,
-                e : e
-            });
-        });
-    }
-};

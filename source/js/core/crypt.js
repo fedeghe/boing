@@ -1,8 +1,8 @@
 // type : FACTOY_METHOD
 
-SB.makeNS('SB/security');
+LIB.makeNS('$LIB$/security');
 
-SB.security = (function () {
+LIB.security = (function () {
 
 	var seed = 24523;
 	// var seed = 2;
@@ -15,8 +15,8 @@ SB.security = (function () {
 		useEncoding : false,
 
 		crypt : function (msg, pwd) {
-			var code_pwd = SB.string.str2code(pwd),
-				code_msg = [].concat(SB.string.str2code(escape(msg)), code_pwd),
+			var code_pwd = LIB.string.str2code(pwd),
+				code_msg = [].concat(LIB.string.str2code(escape(msg)), code_pwd),
 				cout = [],
 				lm = code_msg.length,
 				lp = code_pwd.length,
@@ -25,14 +25,14 @@ SB.security = (function () {
 				t,
 				out;
 			while (i < lm) {
-				t = code_msg[i]  + code_pwd[j] + SB.security.seed;
+				t = code_msg[i]  + code_pwd[j] + LIB.security.seed;
 				cout.push(t);
 				i += 1;
 				j = (j + 1) % lp;
 			}
-			out = SB.string.code2str(cout);
+			out = LIB.string.code2str(cout);
 			
-			return SB.security.useEncoding ? encodeURIComponent( out ) : out;
+			return LIB.security.useEncoding ? encodeURIComponent( out ) : out;
 		}
 		/*
 		decrypt : function (cmsg, pwd) {

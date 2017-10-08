@@ -1,4 +1,4 @@
-SB.makeNS('SB/engy');
+LIB.makeNS('LIB/engy');
 (function() {
 
 	var params = {
@@ -11,7 +11,7 @@ SB.makeNS('SB/engy');
 		proto = document.location.protocol || 'http:',
 		domain = '$DOMAIN$';
 
-	SB.engy.config = {
+	LIB.engy.config = {
 		baseUrl: proto + '//' + domain,
 		componentsUrl: proto + '//' + domain + params.componentsUrl,
 		// openWideUrl: proto + '//' + params.openWideUrl,
@@ -20,5 +20,5 @@ SB.makeNS('SB/engy');
 		eventEntryPoint : params.eventEntryPoint
 	};
 
-	SB.defaultLang = params.defaultLang;
+	LIB.defaultLang = params.defaultLang;
 })();

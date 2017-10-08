@@ -4,15 +4,14 @@ CACHE MANIFEST
 
 index.html
 media/boing1.wav
-media/favicon.ico
-media/favicon.png
+media/favicon1.png
+media/favicon2.png
+media/favicon3.png
 css/fonts/SigmarOne.ttf
 css/fonts/SigmarOne.woff2
-css/img/logo4.png
-css/img/logo4.svg
-css/style.min.css
-js/sb.min.js
-js/main.min.js
+css/style.css
+js/db.js
+js/main.js
 
 NETWORK:
 http://www.freakstyle.it/boing/index.html

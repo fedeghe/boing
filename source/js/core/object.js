@@ -1,4 +1,4 @@
-SB.object = (function (){
+LIB.object = (function (){
 
     /**
      * maps an object literal to a string according using the map function  passed
@@ -53,14 +53,14 @@ SB.object = (function (){
         var found = 0,
             matches = {
                 key : function (k1, k2, key) {
-                    return ($NS$.object.isString(k1) && key instanceof RegExp) ?
+                    return ($LIB$.object.isString(k1) && key instanceof RegExp) ?
                         k1.match(key)
                         :
                         jCompare(k1, key);
                 },
                 value : function (k1, k2, val) {
                     
-                    var v =  ($NS$.object.isString(k2) && val instanceof RegExp) ?
+                    var v =  ($LIB$.object.isString(k2) && val instanceof RegExp) ?
                         k2.match(val)
                         :
                         jCompare(k2, val);
@@ -69,13 +69,13 @@ SB.object = (function (){
                 },
                 keyvalue : function (k1, k2, keyval) {
                     return (
-                        ($NS$.object.isString(k1) && keyval.key instanceof RegExp) ?
+                        ($LIB$.object.isString(k1) && keyval.key instanceof RegExp) ?
                         k1.match(keyval.key)
                         :
                         jCompare(k1, keyval.key)
                     ) && (
 
-                        ($NS$.object.isString(k2) && keyval.value instanceof RegExp) ?
+                        ($LIB$.object.isString(k2) && keyval.value instanceof RegExp) ?
                         k2.match(keyval.value)
                         :
                         jCompare(k2, keyval.value)
@@ -145,7 +145,7 @@ SB.object = (function (){
         },
         
         clone: function(obj) {
-            var self = SB.object,
+            var self = LIB.object,
                 copy,
                 i, l;
             // Handle the 3 simple types, and null or undefined
@@ -218,7 +218,7 @@ SB.object = (function (){
         },
 
         extend: function(o, ext, force) {
-            var obj = SB.object.clone(o),
+            var obj = LIB.object.clone(o),
                 j;
             for (j in ext) {
                 if (ext.hasOwnProperty(j) && (!(j in obj) || force)) {

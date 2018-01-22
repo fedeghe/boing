@@ -3,3 +3,4 @@ boing.sublime-workspace
 EVENTS.txt
 score.php
 *.buildNum.json
+node_modules

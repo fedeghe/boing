@@ -415,6 +415,9 @@
 						style : {color:"black"},
 						wid:'score',
 						html : '0',
+						init : function () {
+							return true;
+						},
 						cb : function () {
 							var self = this,
 								$elf = self.node,

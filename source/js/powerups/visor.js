@@ -40,17 +40,10 @@ powerUps.visor = {
 		_activatePowerup = function () {
 			VISOR.activate.call(VISOR);
 		};
-
-
-
-
-
 	},
 
 	hide : function () {
-
 		console.log('visor hide');
-
 	},
 
 	activate : function () {

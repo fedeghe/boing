@@ -1,0 +1,12 @@
+{
+	"description" : "Very first web-game build wioth Widgzard",
+	"version" : "0.0.1",
+	"scripts" : {
+		"start" : "node srv.js",
+		"build" : "malta build.json",
+		"build:dev" : "malta buildev.json"
+	},
+	"dependencies": {
+		"widgzard": "^0.0.4"
+	}
+}

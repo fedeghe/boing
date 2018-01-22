@@ -11,7 +11,7 @@
 	"VERSION" : "0.1",
 	"BALL" : "daisy.svg",
 	"LIFES" : 3,
-	"SUBMIT_URL" : "http://www.boing2.dev/score.php",
+	"SUBMIT_URL" : "http://www.skilltornado.com/boing/score.php",
 	"FONTAWESOME" : "css/font-awesome-4.5.0/font-awesome.min.css",
 	"NS" : "DB",
 	"LIB" : "LIB",
@@ -24,6 +24,9 @@
 	},
 	"settings" : {
 		"showIntroVideo" : true,
-		"acceleration" : 2
+		"acceleration" : 2,
+		"server" : {
+			"port" : 3000
+		}
 	}
 }

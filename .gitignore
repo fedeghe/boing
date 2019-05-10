@@ -4,3 +4,4 @@ EVENTS.txt
 score.php
 *.buildNum.json
 node_modules
+/webOldVersion

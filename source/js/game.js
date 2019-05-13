@@ -31,7 +31,6 @@
 	
 	gameProto._icon = false;
 
-
 /*
 	DDpowerups/list.jsDD
 */	
@@ -144,7 +143,6 @@
 								left,
 								move = function () {
 
-									
 									running = true;
 									
 									// gravity
@@ -161,7 +159,6 @@
 									rot = (rot0 + i * rotSpeed) % 360;
 									LIB.canvas.drawRotatedImage(ctx, G.I, tx, ty, rot, size)
 
-									
 									LIB.Channel('boing').pub('scoreUp', [multiplier]);
 									check();
 									i++;

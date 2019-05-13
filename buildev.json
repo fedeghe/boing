@@ -14,6 +14,6 @@
 	"source/js/components/*.js" : "js/components -vars=source/vars.json",
 	"source/css/style.less" : "css -require=malta-less -vars=source/vars.json",
 	"source/svg/daisy.svg" : "css/img -plugins=malta-svg2png -vars=source/vars.json",
-	"source/html/index.html" : ". -plugins=malta-browser-refresh[files:\"*\"] -vars=source/vars.json",
+	"source/html/index.html" : ". -plugins=malta-browser-refresh[files:\"*\"]...malta-dev-srv -vars=source/vars.json",
 	"source/html/cache.manifest" : ". -vars=source/vars.json"
 }

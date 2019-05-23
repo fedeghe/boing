@@ -13,9 +13,9 @@
 		"malta": "^3.9.14",
 		"malta-browser-refresh": "^1.2.2",
 		"malta-css-uglify": "^1.0.3",
-		"malta-dev-srv": "^1.0.6",
+		"malta-dev-srv": "^1.1.1",
 		"malta-js-uglify": "^1.0.5",
 		"malta-less": "^1.0.7",
-		"malta-svg2png": "^1.0.4"
+		"malta-svg2png": "^1.0.5"
 	}
 }

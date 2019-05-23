@@ -2,7 +2,7 @@
 	"COMPANY" : "ME",
 	"APPNAME" : "DAISY BOING",
 	"AUTHOR" : "Federico Ghedina",
-	"DOMAIN" : "http://www.jmvc.org",
+	"DOMAIN" : "https://www.jmvc.org",
 	"LIB_EXT" : ".js",
 	"COMPONENTS_EXT" : ".js",
 	"COMPONENTS_URI" : "/js/components",
@@ -13,7 +13,7 @@
 	"LIFES" : 3,
 	"SUBMIT_URL" : "http://www.skilltornado.com/boing/score.php",
 	"FONTAWESOME" : "css/font-awesome-4.5.0/font-awesome.min.css",
-	"NS" : "DB",
+
 	"LIB" : "LIB",
 	"daisy" : {
 		"size" : 60,

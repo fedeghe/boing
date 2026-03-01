@@ -10,8 +10,8 @@
 		"widgzard": "^0.0.4"
 	},
 	"devDependencies": {
-		"malta": "^3.9.14",
-		"malta-browser-refresh": "^1.2.2",
+		"malta": "^4.1.33",
+		"malta-browser-refresh": "^1.2.16",
 		"malta-css-uglify": "^1.0.3",
 		"malta-dev-srv": "^1.1.1",
 		"malta-js-uglify": "^1.0.5",
